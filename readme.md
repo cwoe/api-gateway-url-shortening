@@ -1,6 +1,6 @@
 This is URL Shortener using multiple AWS Services (S3, Lambda, API Gateway).
 
-You can find a working version here: ![https://cwoellner.com/urlshortener/](https://cwoellner.com/urlshortener/)
+You can find a working version here: [https://cwoellner.com/urlshortener/](https://cwoellner.com/urlshortener/)
 
 TODOs:
 

@@ -9,4 +9,5 @@ Cloudfront:
   - Dynamicly get bucket name
   - Set up a lifecycle policy for the S3 Bucket
   - Find a way to upload the lambda code within the template
+
 The live version has these issues fixed via manual intervention.

@@ -9,7 +9,7 @@ url = 'url.cwoellner.com'
 
 def createSiteId():
     s3 = boto3.resource('s3')
-    hexcode = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(8)) + '.html'
+    hexcode = ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(8)) + '.html'
     try:
         s3.Object(url, hexcode).load()
     except botocore.exceptions.ClientError as e:

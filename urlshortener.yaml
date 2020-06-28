@@ -2,12 +2,14 @@ AWSTemplateFormatVersion: 2010-09-09
 Resources:
   URLBucket:
     Type: 'AWS::S3::Bucket'
-    
     Properties:
       WebsiteConfiguration:
         IndexDocument: index.html
         ErrorDocument: error.html
       AccessControl: PublicRead
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 62909428-f64c-48be-bb5d-97d2288e7600
   S3PutGetObjectRole:
     Type: 'AWS::IAM::Role'
     Properties:
@@ -21,9 +23,13 @@ Resources:
             Action:
               - 'sts:AssumeRole'
       Path: /
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: efed1d03-2d40-4ed1-8472-1c276cbcf15c
   S3PutGetObjectPolicy:
     DependsOn:
       - S3PutGetObjectRole
+      - URLBucket
     Type: 'AWS::IAM::Policy'
     Properties:
       PolicyName: S3PutGetObjectPolicy
@@ -37,11 +43,19 @@ Resources:
             Action:
               - 's3:PutObject'
               - 's3:GetObject'
-            Resource: 'arn:aws:s3:::url.cwoellner.com/*'
+            Resource: !Join
+              - ''
+              - - !GetAtt URLBucket.Arn
+                - /*
           - Sid: VisualEditor1
             Effect: Allow
             Action: 's3:ListBucket'
-            Resource: 'arn:aws:s3:::url.cwoellner.com'
+            Resource: !GetAtt
+              - URLBucket
+              - Arn
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 5ee891d6-9f72-462f-84da-59abf93c0f12
   shortenurl:
     Type: 'AWS::Lambda::Function'
     DependsOn:
@@ -167,12 +181,18 @@ Resources:
                   - 'logs:GetLogEvents'
                   - 'logs:FilterLogEvents'
                 Resource: '*'
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 8b6502b3-d996-45e6-a9c5-a336c64e464f
   ApiGatewayAccount:
     Type: 'AWS::ApiGateway::Account'
     Properties:
       CloudWatchRoleArn: !GetAtt 
         - ApiGatewayCloudWatchLogsRole
         - Arn
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 97bebe3d-3ade-4d02-8e1b-ba872f148fb7
   shorteningResource:
     Type: 'AWS::ApiGateway::Resource'
     Properties:
@@ -191,6 +211,9 @@ Resources:
     Properties:
       RestApiId: !Ref urlshorteningapi
       StageName: DummyStage
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 14d4605c-1e65-4822-a352-c5de1fcad857
   shortenRequest:
     DependsOn: LambdaPermission
     Type: 'AWS::ApiGateway::Method'
@@ -237,3 +260,6 @@ Resources:
       Principal: apigateway.amazonaws.com
       SourceArn: !Sub >-
         arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${urlshorteningapi}/prod/shorten
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: fcb42b69-afdb-437e-b087-ddb42ac6a546

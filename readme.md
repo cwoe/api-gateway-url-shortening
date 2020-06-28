@@ -7,7 +7,7 @@ TODOs:
 Cloudfront:
   - Add CORS for API Gateway
   - Throttle API Gateway
-  - Dynamicly get bucket name
+  - Make new Objects Public by default
   - Set up a lifecycle policy for the S3 Bucket
   - Find a way to upload the lambda code within the template
 

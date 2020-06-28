@@ -32,7 +32,7 @@ def lambda_handler(event, context):
     bytestream = bytes(pagecontent.encode('UTF-8'))
     
     s3 = boto3.client('s3')
-    s3.put_object(Bucket=bucket, Key=hexcode, Body=bytestream, ContentType="text/html")
+    s3.put_object(ACL='public-read', Bucket=bucket, Key=hexcode, Body=bytestream, ContentType="text/html")
     
     shorturl = 'https://' + url + '/' + hexcode
     response = {}

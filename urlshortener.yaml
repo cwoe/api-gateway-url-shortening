@@ -11,10 +11,7 @@ Resources:
         Rules:
           - Id : DeleteAfter30Days
             Status: 'Enabled'
-            ExpirtationInDays: 30
-  Metadata:
-      'AWS::CloudFormation::Designer':
-        id: 62909428-f64c-48be-bb5d-97d2288e7600
+            ExpirationInDays: 30
   S3PutGetObjectRole:
     Type: 'AWS::IAM::Role'
     Properties:
@@ -28,9 +25,6 @@ Resources:
             Action:
               - 'sts:AssumeRole'
       Path: /
-    Metadata:
-      'AWS::CloudFormation::Designer':
-        id: efed1d03-2d40-4ed1-8472-1c276cbcf15c
   S3PutGetObjectPolicy:
     DependsOn:
       - S3PutGetObjectRole
@@ -58,9 +52,6 @@ Resources:
             Resource: !GetAtt
               - URLBucket
               - Arn
-    Metadata:
-      'AWS::CloudFormation::Designer':
-        id: 5ee891d6-9f72-462f-84da-59abf93c0f12
   shortenurl:
     Type: 'AWS::Lambda::Function'
     DependsOn:
@@ -111,9 +102,6 @@ Resources:
       Handler: lambda_function.lambda_handler
       Runtime: python3.7
       MemorySize: 128
-    Metadata:
-      'AWS::CloudFormation::Designer':
-        id: ad5a1478-847f-49fd-ab0c-68b99c75bd59
   urlshorteningapi:
     Type: 'AWS::ApiGateway::RestApi'
     DependsOn:
@@ -122,9 +110,6 @@ Resources:
       Name: URL Shortening API
       Description: API used for Shortening URLs
       FailOnWarnings: true
-    Metadata:
-      'AWS::CloudFormation::Designer':
-        id: 5fffabc5-02d8-4962-bb0d-f75a55eb94e7
   LambdaPermission:
     Type: 'AWS::Lambda::Permission'
     Properties:
@@ -142,9 +127,6 @@ Resources:
           - ':'
           - !Ref urlshorteningapi
           - /*
-    Metadata:
-      'AWS::CloudFormation::Designer':
-        id: 1aeaa847-aee4-4823-aa98-34f587c04ecc
   UrlApiStage:
     Type: 'AWS::ApiGateway::Stage'
     Properties:
@@ -156,9 +138,6 @@ Resources:
           ResourcePath: /*
       RestApiId: !Ref urlshorteningapi
       StageName: prod
-    Metadata:
-      'AWS::CloudFormation::Designer':
-        id: 5d344499-afb2-480d-98dd-0b6fd273068d
   ApiGatewayCloudWatchLogsRole:
     Type: 'AWS::IAM::Role'
     Properties:
@@ -186,18 +165,12 @@ Resources:
                   - 'logs:GetLogEvents'
                   - 'logs:FilterLogEvents'
                 Resource: '*'
-    Metadata:
-      'AWS::CloudFormation::Designer':
-        id: 8b6502b3-d996-45e6-a9c5-a336c64e464f
   ApiGatewayAccount:
     Type: 'AWS::ApiGateway::Account'
     Properties:
       CloudWatchRoleArn: !GetAtt
         - ApiGatewayCloudWatchLogsRole
         - Arn
-    Metadata:
-      'AWS::CloudFormation::Designer':
-        id: 97bebe3d-3ade-4d02-8e1b-ba872f148fb7
   shorteningResource:
     Type: 'AWS::ApiGateway::Resource'
     Properties:
@@ -206,9 +179,6 @@ Resources:
         - urlshorteningapi
         - RootResourceId
       PathPart: shorten
-    Metadata:
-      'AWS::CloudFormation::Designer':
-        id: 7bcc2cba-55cc-4d79-910e-ca987aa6a149
   ApiDeployment:
     Type: 'AWS::ApiGateway::Deployment'
     DependsOn:
@@ -216,9 +186,6 @@ Resources:
     Properties:
       RestApiId: !Ref urlshorteningapi
       StageName: DummyStage
-    Metadata:
-      'AWS::CloudFormation::Designer':
-        id: 14d4605c-1e65-4822-a352-c5de1fcad857
   shortenRequest:
     DependsOn: LambdaPermission
     Type: 'AWS::ApiGateway::Method'
@@ -251,9 +218,6 @@ Resources:
       RestApiId: !Ref urlshorteningapi
       MethodResponses:
         - StatusCode: 200
-    Metadata:
-      'AWS::CloudFormation::Designer':
-        id: 67a717c8-fb02-4051-90b2-c19a7a78bf20
   lambdaApiGatewayInvoke:
     Type: 'AWS::Lambda::Permission'
     DependsOn: shortenurl
@@ -265,6 +229,3 @@ Resources:
       Principal: apigateway.amazonaws.com
       SourceArn: !Sub >-
         arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${urlshorteningapi}/prod/shorten
-    Metadata:
-      'AWS::CloudFormation::Designer':
-        id: fcb42b69-afdb-437e-b087-ddb42ac6a546

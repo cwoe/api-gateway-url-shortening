@@ -1,6 +1,7 @@
 ## Description:
 
-This is URL Shortener using multiple AWS Services (S3, Lambda, API Gateway).
+This is a URL Shortener using multiple AWS Services (S3, Lambda, API Gateway).
+
 
 
 Links are send as parameters of GET requests to API Gateway.

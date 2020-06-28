@@ -4,13 +4,15 @@ You can find a live version here: [https://cwoellner.com/urlshortener/](https://
 
 ![](./new-designer.png)
 
-Cloudformation Template:
+## Cloudformation Template:
 
 Creates the Bucket with Lifecycle Policy and Website hosting enabled.
+
 Creates the Lambda function and the reqired AIM role and policy for accesing the bucket.
+
 Creates the API, connects it with the the Lambda function via Lambda Proxy, adds the required AMI roles and policies and deploys the API.
 
-TODO:
+#### TODO:
   - Add CORS for API Gateway
   - Throttle API Gateway
   - Find a way to upload the lambda code within the template

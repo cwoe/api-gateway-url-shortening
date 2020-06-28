@@ -7,7 +7,12 @@ Resources:
         IndexDocument: index.html
         ErrorDocument: error.html
       AccessControl: PublicRead
-    Metadata:
+      LifecycleConfiguration:
+        Rules:
+          - Id : DeleteAfter30Days
+            Status: 'Enabled'
+            ExpirtationInDays: 30
+  Metadata:
       'AWS::CloudFormation::Designer':
         id: 62909428-f64c-48be-bb5d-97d2288e7600
   S3PutGetObjectRole:
@@ -99,7 +104,7 @@ Resources:
                   },
                   'body': json.dumps(response)
               }
-      Role: !GetAtt 
+      Role: !GetAtt
         - S3PutGetObjectRole
         - Arn
       Timeout: 3
@@ -124,11 +129,11 @@ Resources:
     Type: 'AWS::Lambda::Permission'
     Properties:
       Action: 'lambda:invokeFunction'
-      FunctionName: !GetAtt 
+      FunctionName: !GetAtt
         - shortenurl
         - Arn
       Principal: apigateway.amazonaws.com
-      SourceArn: !Join 
+      SourceArn: !Join
         - ''
         - - 'arn:aws:execute-api:'
           - !Ref 'AWS::Region'
@@ -187,7 +192,7 @@ Resources:
   ApiGatewayAccount:
     Type: 'AWS::ApiGateway::Account'
     Properties:
-      CloudWatchRoleArn: !GetAtt 
+      CloudWatchRoleArn: !GetAtt
         - ApiGatewayCloudWatchLogsRole
         - Arn
     Metadata:
@@ -197,7 +202,7 @@ Resources:
     Type: 'AWS::ApiGateway::Resource'
     Properties:
       RestApiId: !Ref urlshorteningapi
-      ParentId: !GetAtt 
+      ParentId: !GetAtt
         - urlshorteningapi
         - RootResourceId
       PathPart: shorten
@@ -223,19 +228,19 @@ Resources:
       Integration:
         Type: AWS_PROXY
         IntegrationHttpMethod: POST
-        Uri: !Join 
+        Uri: !Join
           - ''
           - - 'arn:aws:apigateway:'
             - !Ref 'AWS::Region'
             - ':lambda:path/2015-03-31/functions/'
-            - !GetAtt 
+            - !GetAtt
               - shortenurl
               - Arn
             - /invocations
         IntegrationResponses:
           - StatusCode: 200
         RequestTemplates:
-          application/json: !Join 
+          application/json: !Join
             - ''
             - - '{'
               - '"longurl": "$input.params(''longurl'')"'
@@ -254,7 +259,7 @@ Resources:
     DependsOn: shortenurl
     Properties:
       Action: 'lambda:InvokeFunction'
-      FunctionName: !GetAtt 
+      FunctionName: !GetAtt
         - shortenurl
         - Arn
       Principal: apigateway.amazonaws.com

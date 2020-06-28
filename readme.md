@@ -29,7 +29,7 @@ Creates the API, connects it with the the Lambda function via Lambda Proxy, adds
   - Throttle API Gateway
   - Find a way to upload the lambda code within the template
 
-The live version has these issues fixed via manual intervention.
+The live version has these issues are fixed via manual intervention.
 
 
 ## Sources:

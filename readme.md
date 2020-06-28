@@ -9,8 +9,9 @@ The API Gateway uses Lambda Proxy to forward the request to Lambda.\
 The Lambda Function creates a unique ID, a .html file in a S3 Bucket and return the url of the file.\
 The S3 Bucket allows public-read access for all documents.
 
+You can find a live version here: [https://cwoellner.com/urlshortener/](https://cwoellner.com/urlshortener/)\
+The live version has the CNAME Record in place aliasing the bucket URL to url.cwoellner.com which is the bucket name.
 
-You can find a live version here: [https://cwoellner.com/urlshortener/](https://cwoellner.com/urlshortener/)
 
 #### Simple Design:
 ![](./simple_design.png)

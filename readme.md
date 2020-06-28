@@ -2,7 +2,7 @@ This is URL Shortener using multiple AWS Services (S3, Lambda, API Gateway).
 
 You can find a live version here: [https://cwoellner.com/urlshortener/](https://cwoellner.com/urlshortener/)
 
-![](./design.png)
+![](./new-designer.png)
 
 Cloudformation Template:
 

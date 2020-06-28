@@ -12,7 +12,9 @@ The S3 Bucket allows public-read access for all documents.
 
 You can find a live version here: [https://cwoellner.com/urlshortener/](https://cwoellner.com/urlshortener/)
 
+#### Simple Design:
 ![](./simple_design.png)
+#### Cloudfront Design:
 ![](./new-designer.png)
 
 ## Cloudformation Template:

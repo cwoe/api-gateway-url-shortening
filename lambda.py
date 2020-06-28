@@ -5,13 +5,13 @@ import string
 import botocore
 
 url = 'url.cwoellner.com'
-
+bucket = 'url.cwoellner.com'
 
 def createSiteId():
     s3 = boto3.resource('s3')
     hexcode = ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(8)) + '.html'
     try:
-        s3.Object(url, hexcode).load()
+        s3.Object(bucket, hexcode).load()
     except botocore.exceptions.ClientError as e:
         if e.response['Error']['Code'] == "404":
             return hexcode
@@ -32,7 +32,7 @@ def lambda_handler(event, context):
     bytestream = bytes(pagecontent.encode('UTF-8'))
     
     s3 = boto3.client('s3')
-    s3.put_object(Bucket=url, Key=hexcode, Body=bytestream, ContentType="text/html")
+    s3.put_object(Bucket=bucket, Key=hexcode, Body=bytestream, ContentType="text/html")
     
     shorturl = 'https://' + url + '/' + hexcode
     response = {}

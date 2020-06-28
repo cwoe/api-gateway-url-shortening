@@ -34,6 +34,6 @@ The live version has these issues fixed via manual intervention.
 
 ## Sources:
 
-(https://blog.jayway.com/2016/08/17/introduction-to-cloudformation-for-api-gateway/)[https://blog.jayway.com/2016/08/17/introduction-to-cloudformation-for-api-gateway/]
+[https://blog.jayway.com/2016/08/17/introduction-to-cloudformation-for-api-gateway/](https://blog.jayway.com/2016/08/17/introduction-to-cloudformation-for-api-gateway/)
 
-(https://medium.com/@joanisaac.biel/setting-up-cors-and-lambda-proxy-integration-in-aws-api-gateway-using-cloudformation-371312eebcb0)[https://medium.com/@joanisaac.biel/setting-up-cors-and-lambda-proxy-integration-in-aws-api-gateway-using-cloudformation-371312eebcb0]
+[https://medium.com/@joanisaac.biel/setting-up-cors-and-lambda-proxy-integration-in-aws-api-gateway-using-cloudformation-371312eebcb0](https://medium.com/@joanisaac.biel/setting-up-cors-and-lambda-proxy-integration-in-aws-api-gateway-using-cloudformation-371312eebcb0)
